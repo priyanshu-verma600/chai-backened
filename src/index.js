@@ -8,7 +8,19 @@ dotenv.config({
 })
 
 
-connectDB();
+connectDB()   // mongoDB connection ke bad hmesa ek promise return me milta hai
+.then(()=>{
+    app.listen(process.env.PORT || 8000 , ()=>{
+        console.log(`server is running on the port: ${process.env.PORT}`);
+    })
+    app.on("error",(error)=>{
+        console.log("error",error)
+        throw error;
+    })
+})
+.catch((err)=>{
+    console.log("mongoDB connection failed !!!", err);
+})
 
 
 /*
